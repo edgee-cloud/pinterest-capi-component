@@ -13,10 +13,10 @@ export!(PinterestComponent);
 struct PinterestComponent;
 
 impl Guest for PinterestComponent {
-    fn page(edgee_event: Event, cred_map: Dict) -> Result<EdgeeRequest, String> {
+    fn page(edgee_event: Event, settings: Dict) -> Result<EdgeeRequest, String> {
         if let Data::Page(ref data) = edgee_event.data {
             let mut pinterest_payload =
-                PinterestPayload::new(cred_map).map_err(|e| e.to_string())?;
+                PinterestPayload::new(settings).map_err(|e| e.to_string())?;
 
             let mut event =
                 PinterestEvent::new(&edgee_event, "page_visit").map_err(|e| e.to_string())?;
@@ -48,14 +48,14 @@ impl Guest for PinterestComponent {
         }
     }
 
-    fn track(edgee_event: Event, cred_map: Dict) -> Result<EdgeeRequest, String> {
+    fn track(edgee_event: Event, settings: Dict) -> Result<EdgeeRequest, String> {
         if let Data::Track(ref data) = edgee_event.data {
             if data.name.is_empty() {
                 return Err("Track name is not set".to_string());
             }
 
             let mut pinterest_payload =
-                PinterestPayload::new(cred_map).map_err(|e| e.to_string())?;
+                PinterestPayload::new(settings).map_err(|e| e.to_string())?;
             let mut event =
                 PinterestEvent::new(&edgee_event, "custom").map_err(|e| e.to_string())?;
 
@@ -74,14 +74,14 @@ impl Guest for PinterestComponent {
         }
     }
 
-    fn user(edgee_event: Event, cred_map: Dict) -> Result<EdgeeRequest, String> {
+    fn user(edgee_event: Event, settings: Dict) -> Result<EdgeeRequest, String> {
         if let Data::User(ref data) = edgee_event.data {
             if data.user_id.is_empty() && data.anonymous_id.is_empty() {
                 return Err("user_id or anonymous_id is not set".to_string());
             }
 
             let mut pinterest_payload =
-                PinterestPayload::new(cred_map).map_err(|e| e.to_string())?;
+                PinterestPayload::new(settings).map_err(|e| e.to_string())?;
             let event = PinterestEvent::new(&edgee_event, "lead").map_err(|e| e.to_string())?;
             pinterest_payload.data.push(event);
 
@@ -119,6 +119,7 @@ fn build_edgee_request(pinterest_payload: PinterestPayload) -> EdgeeRequest {
         method: HttpMethod::Post,
         url,
         headers,
+        forward_client_headers: true,
         body: serde_json::to_string(&pinterest_payload).unwrap(),
     }
 }
@@ -356,14 +357,14 @@ mod tests {
         }
     }
 
-    fn sample_credentials() -> Vec<(String, String)> {
+    fn sample_settings() -> Vec<(String, String)> {
         vec![
             ("pinterest_access_token".to_string(), "abc".to_string()),
             ("pinterest_ad_account_id".to_string(), "abc".to_string()),
         ]
     }
 
-    fn sample_credentials_with_test_code() -> Vec<(String, String)> {
+    fn sample_settings_with_test_code() -> Vec<(String, String)> {
         vec![
             ("pinterest_access_token".to_string(), "abc".to_string()),
             ("pinterest_ad_account_id".to_string(), "abc".to_string()),
@@ -379,8 +380,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials();
-        let result = PinterestComponent::page(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::page(event, settings);
 
         assert_eq!(result.is_err(), false);
         let edgee_request = result.unwrap();
@@ -403,8 +404,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials();
-        let result = PinterestComponent::page(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::page(event, settings);
 
         assert_eq!(result.is_err(), false);
         let edgee_request = result.unwrap();
@@ -420,8 +421,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials();
-        let result = PinterestComponent::page(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::page(event, settings);
 
         assert_eq!(result.is_err(), true);
         assert_eq!(
@@ -438,8 +439,8 @@ mod tests {
     #[test]
     fn page_with_edgee_id_uuid() {
         let event = sample_page_event(None, Uuid::new_v4().to_string(), "fr".to_string(), true);
-        let credentials = sample_credentials();
-        let result = PinterestComponent::page(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::page(event, settings);
 
         assert_eq!(result.is_err(), false);
         let edgee_request = result.unwrap();
@@ -451,8 +452,8 @@ mod tests {
     fn page_with_empty_locale() {
         let event = sample_page_event(None, Uuid::new_v4().to_string(), "".to_string(), true);
 
-        let credentials = sample_credentials();
-        let result = PinterestComponent::page(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::page(event, settings);
 
         assert_eq!(result.is_err(), false);
         let edgee_request = result.unwrap();
@@ -463,8 +464,8 @@ mod tests {
     #[test]
     fn page_not_session_start() {
         let event = sample_page_event(None, Uuid::new_v4().to_string(), "".to_string(), false);
-        let credentials = sample_credentials();
-        let result = PinterestComponent::page(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::page(event, settings);
 
         assert_eq!(result.is_err(), false);
         let edgee_request = result.unwrap();
@@ -475,18 +476,18 @@ mod tests {
     #[test]
     fn page_without_access_token_fails() {
         let event = sample_page_event(None, "abc".to_string(), "fr".to_string(), true);
-        let credentials: Vec<(String, String)> = vec![]; // empty
-        let result = PinterestComponent::page(event, credentials); // this should panic!
+        let settings: Vec<(String, String)> = vec![]; // empty
+        let result = PinterestComponent::page(event, settings); // this should panic!
         assert_eq!(result.is_err(), true);
     }
 
     #[test]
     fn page_without_pixel_id_fails() {
         let event = sample_page_event(None, "abc".to_string(), "fr".to_string(), true);
-        let credentials: Vec<(String, String)> = vec![
+        let settings: Vec<(String, String)> = vec![
             ("pinterest_access_token".to_string(), "abc".to_string()), // only access token
         ];
-        let result = PinterestComponent::page(event, credentials); // this should panic!
+        let result = PinterestComponent::page(event, settings); // this should panic!
         assert_eq!(result.is_err(), true);
     }
 
@@ -499,8 +500,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials();
-        let result = PinterestComponent::track(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::track(event, settings);
         assert_eq!(result.clone().is_err(), false);
         let edgee_request = result.unwrap();
         assert_eq!(edgee_request.method, HttpMethod::Post);
@@ -516,8 +517,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials();
-        let result = PinterestComponent::track(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::track(event, settings);
         assert_eq!(result.is_err(), true);
     }
 
@@ -529,8 +530,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials();
-        let result = PinterestComponent::user(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::user(event, settings);
 
         assert_eq!(result.clone().is_err(), false);
     }
@@ -543,8 +544,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials_with_test_code();
-        let result = PinterestComponent::user(event, credentials);
+        let settings = sample_settings_with_test_code();
+        let result = PinterestComponent::user(event, settings);
 
         assert_eq!(result.clone().is_err(), false);
         let edgee_request = result.unwrap();
@@ -559,8 +560,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials();
-        let result = PinterestComponent::user(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::user(event, settings);
 
         assert_eq!(result.clone().is_err(), true);
         assert_eq!(
@@ -582,8 +583,8 @@ mod tests {
             "fr".to_string(),
             true,
         );
-        let credentials = sample_credentials();
-        let result = PinterestComponent::user(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::user(event, settings);
 
         assert_eq!(result.clone().is_err(), true);
         assert_eq!(
@@ -608,8 +609,8 @@ mod tests {
         );
         event.context.user.properties = vec![]; // empty context user properties
         event.context.user.user_id = "".to_string(); // empty context user id
-        let credentials = sample_credentials();
-        let result = PinterestComponent::track(event, credentials);
+        let settings = sample_settings();
+        let result = PinterestComponent::track(event, settings);
         assert_eq!(result.clone().is_err(), true);
         assert_eq!(
             result
