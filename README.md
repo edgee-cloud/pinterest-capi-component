@@ -22,11 +22,11 @@ This component implements the data collection protocol between [Edgee](https://w
 
 ```toml
 [[destinations.data_collection]]
-name = "pinterest_capi"
-component = "/var/edgee/components/pinterest_capi.wasm"
-credentials.pinterest_access_token = "YOUR_ACCESS_TOKEN"
-credentials.pinterest_ad_account_id = "YOUR_AD_ACCOUNT_ID"
-credentials.is_test = "true" # Optional
+id = "pinterest_capi"
+file = "/var/edgee/components/pinterest_capi.wasm"
+settings.pinterest_access_token = "YOUR_ACCESS_TOKEN"
+settings.pinterest_ad_account_id = "YOUR_AD_ACCOUNT_ID"
+settings.is_test = "true" # Optional
 ```
 
 ## Event Handling
@@ -66,22 +66,22 @@ edgee.user({
 ### Basic Configuration
 ```toml
 [[destinations.data_collection]]
-name = "pinterest_capi"
-component = "/var/edgee/components/pinterest_capi.wasm"
-credentials.pinterest_access_token = "YOUR_ACCESS_TOKEN"
-credentials.pinterest_ad_account_id = "YOUR_AD_ACCOUNT_ID"
-credentials.pinterest_test_event_code = "TEST_EVENT_CODE" # Optional
+id = "pinterest_capi"
+file = "/var/edgee/components/pinterest_capi.wasm"
+settings.pinterest_access_token = "YOUR_ACCESS_TOKEN"
+settings.pinterest_ad_account_id = "YOUR_AD_ACCOUNT_ID"
+settings.pinterest_test_event_code = "TEST_EVENT_CODE" # Optional
 
 # Optional configurations
-config.default_consent = "pending" # Set default consent status
+settings.default_consent = "pending" # Set default consent status
 ```
 
 ### Event Controls
 Control which events are forwarded to Pinterest CAPI:
 ```toml
-config.page_event_enabled = true   # Enable/disable page view tracking
-config.track_event_enabled = true  # Enable/disable custom event tracking
-config.user_event_enabled = true   # Enable/disable user identification
+settings.page_event_enabled = true   # Enable/disable page view tracking
+settings.track_event_enabled = true  # Enable/disable custom event tracking
+settings.user_event_enabled = true   # Enable/disable user identification
 ```
 
 ### Consent Management
