@@ -12,6 +12,11 @@
 
 <h1 align="center">Pinterest CAPI Component for Edgee</h1>
 
+
+[![Coverage Status](https://coveralls.io/repos/github/edgee-cloud/pinterest-capi-component/badge.svg)](https://coveralls.io/github/edgee-cloud/pinterest-capi-component)
+[![GitHub issues](https://img.shields.io/github/issues/edgee-cloud/pinterest-capi-component.svg)](https://github.com/edgee-cloud/pinterest-capi-component/issues)
+[![Edgee Component Registry](https://img.shields.io/badge/Edgee_Component_Registry-Public-green.svg)](https://www.edgee.cloud/edgee/pinterest-capi)
+
 This component implements the data collection protocol between [Edgee](https://www.edgee.cloud) and [Pinterest CAPI](https://help.pinterest.com/en/business/article/getting-started-with-the-conversions-api).
 
 ## Quick Start
