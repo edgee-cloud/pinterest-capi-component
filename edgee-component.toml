@@ -1,0 +1,37 @@
+manifest-version = 1
+
+[component]
+name = "Pinterest Capi"
+version = "0.1.0"
+category = "data-collection"
+subcategory = "analytics"
+description = """
+The Pinterest Conversions API enables advertisers to send conversions directly to Pinterest via a server-to-server connection.
+Conversions captured with the Pinterest API can then be used for campaign optimization, targeting and conversion reporting for improved conversion visibility.
+"""
+documentation = "https://www.edgee.cloud/docs/components/data-collection/pinterest-capi"
+repository = "https://github.com/edgee-cloud/pinterest-capi-component"
+wit-world-version = "0.4.0"
+
+[component.build]
+command = "cargo build --target wasm32-wasip2 --release && cp ./target/wasm32-wasip2/release/pinterest_capi_component.wasm pinterest_capi.wasm"
+output_path = "pinterest_capi.wasm"
+
+[component.settings.pinterest_ad_account_id]
+title = "Pinterest Ad Account ID"
+type = "string"
+required = true
+description = "The Ad Account ID of your Pinterest account"
+
+[component.settings.pinterest_access_token]
+title = "Pinterest Access Token"
+type = "string"
+required = true
+description = "The access token for your Pinterest account"
+
+[component.settings.is_test]
+title = "Pinterest test mode"
+type = "bool"
+required = false
+description = "Put to true if you want to perform test requests"
+
