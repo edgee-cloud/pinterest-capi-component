@@ -638,7 +638,7 @@ checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
 
 [[package]]
 name = "pinterest-capi-component"
-version = "0.1.0"
+version = "0.8.0"
 dependencies = [
  "anyhow",
  "cargo-llvm-cov",
