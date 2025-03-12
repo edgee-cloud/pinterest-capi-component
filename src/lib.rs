@@ -6,7 +6,7 @@ use crate::exports::edgee::components::data_collection::{
 };
 use pinterest_payload::{parse_value, PinterestEvent, PinterestPayload};
 
-wit_bindgen::generate!({world: "data-collection", path: "wit", generate_all});
+wit_bindgen::generate!({world: "data-collection", path: ".edgee/wit", generate_all});
 
 export!(PinterestComponent);
 
