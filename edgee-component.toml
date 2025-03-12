@@ -11,8 +11,9 @@ Conversions captured with the Pinterest API can then be used for campaign optimi
 """
 documentation = "https://www.edgee.cloud/docs/components/data-collection/pinterest-capi"
 repository = "https://github.com/edgee-cloud/pinterest-capi-component"
-wit-world-version = "0.5.0"
+wit-version = "1.0.0"
 icon-path = "pinterest.png"
+language = "Rust"
 
 [component.build]
 command = "cargo build --target wasm32-wasip2 --release && cp ./target/wasm32-wasip2/release/pinterest_capi_component.wasm pinterest_capi.wasm"
