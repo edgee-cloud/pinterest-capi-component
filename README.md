@@ -26,7 +26,7 @@ This component implements the data collection protocol between [Edgee](https://w
 3. Add the following configuration to your `edgee.toml`:
 
 ```toml
-[[destinations.data_collection]]
+[[components.data_collection]]
 id = "pinterest_capi"
 file = "/var/edgee/components/pinterest_capi.wasm"
 settings.pinterest_access_token = "YOUR_ACCESS_TOKEN"
@@ -70,7 +70,7 @@ edgee.user({
 
 ### Basic Configuration
 ```toml
-[[destinations.data_collection]]
+[[components.data_collection]]
 id = "pinterest_capi"
 file = "/var/edgee/components/pinterest_capi.wasm"
 settings.pinterest_access_token = "YOUR_ACCESS_TOKEN"
