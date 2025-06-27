@@ -110,7 +110,7 @@ fn build_edgee_request(pinterest_payload: PinterestPayload) -> EdgeeRequest {
     );
 
     let url = if pinterest_payload.is_test {
-        format!("{}?test=true", url)
+        format!("{url}?test=true")
     } else {
         url
     };
