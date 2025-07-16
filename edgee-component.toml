@@ -16,7 +16,7 @@ icon-path = "pinterest.png"
 language = "Rust"
 
 [component.build]
-command = "cargo build --target wasm32-wasip2 --release && cp ./target/wasm32-wasip2/release/pinterest_capi_component.wasm pinterest_capi.wasm"
+command = "cargo build --target wasm32-wasip2 --release && rm -f pinterest_capi.wasm && cp ./target/wasm32-wasip2/release/pinterest_capi_component.wasm pinterest_capi.wasm"
 output_path = "pinterest_capi.wasm"
 
 [component.settings.pinterest_ad_account_id]
