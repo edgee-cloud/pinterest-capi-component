@@ -41,7 +41,7 @@ This integration ensures reliable data tracking, even in the presence of ad bloc
 
 ---
 
-Additional resources: [Pinterest Conversions API](https://help.pinterest.com/en/business/article/conversions-api)
+Additional resources: [Pinterest Conversions API](https://help.pinterest.com/en/business/article/the-pinterest-api-for-conversions)
 """
 documentation = "https://www.edgee.cloud/docs/components/data-collection/pinterest-capi"
 repository = "https://github.com/edgee-cloud/pinterest-capi-component"
