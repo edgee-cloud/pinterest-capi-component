@@ -6,10 +6,6 @@ version = "1.0.0"
 category = "data-collection"
 subcategory = "conversion-api"
 description = """
-# Pinterest CAPI Component
-
-[https://www.edgee.cloud/edgee/pinterest-capi](https://www.edgee.cloud/edgee/pinterest-capi)
-
 ## Overview
 
 The **Pinterest Conversions API (CAPI)** component by Edgee enables server-side integration of Pinterest CAPI, allowing you to send conversion events directly to Pinterest from your server.
