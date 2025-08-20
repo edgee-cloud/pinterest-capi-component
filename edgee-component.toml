@@ -6,8 +6,42 @@ version = "1.0.0"
 category = "data-collection"
 subcategory = "conversion-api"
 description = """
-The Pinterest Conversions API enables advertisers to send conversions directly to Pinterest via a server-to-server connection.
-Conversions captured with the Pinterest API can then be used for campaign optimization, targeting and conversion reporting for improved conversion visibility.
+## Overview
+
+The **Pinterest Conversions API (CAPI)** component by Edgee enables server-side integration of Pinterest CAPI, allowing you to send conversion events directly to Pinterest from your server.
+This integration ensures reliable data tracking, even in the presence of ad blockers or browser limitations, by bypassing client-side restrictions.
+
+---
+
+## Key Features & Benefits
+
+### Features
+
+- **Server-Side Integration**: Sends conversion events directly from your server to Pinterest, bypassing client-side limitations.
+- **Event Mapping**: Maps Edgee events to Pinterest CAPI events for seamless integration.
+- **User Identification**: Requires user identification data (e.g., email) for event processing.
+- **Testing Mode**: Includes an optional testing mode to verify your implementation without affecting production data.
+
+### Benefits
+
+- **Enhanced Data Accuracy**: Improves conversion tracking reliability by reducing client-side dependencies.
+- **Ad Blocker Resistance**: Mitigates the impact of ad blockers on data collection.
+- **Improved Attribution**: Ensures proper user attribution across sessions.
+- **Privacy Compliance**: Aligns with privacy regulations by minimizing third-party cookie usage.
+
+---
+
+## Use Cases
+
+- **Ad Blocker Resilience**: Capture conversions even when client-side tags are blocked.
+- **Performance-First Tracking**: Reduce front-end load by moving tracking logic to the edge.
+- **Campaign Optimization**: Improve reporting and retargeting accuracy for Pinterest ad campaigns.
+- **Privacy and Compliance**: Enforce consent-driven event forwarding.
+- **Unified Data Flow**: Centralize tracking pipelines across platforms using CAPI protocols.
+
+---
+
+Additional resources: [Pinterest Conversions API](https://help.pinterest.com/en/business/article/the-pinterest-api-for-conversions)
 """
 documentation = "https://www.edgee.cloud/docs/components/data-collection/pinterest-capi"
 repository = "https://github.com/edgee-cloud/pinterest-capi-component"
